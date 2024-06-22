@@ -10,6 +10,7 @@ body {
     font-family: 'Mulish', sans-serif;
     font-size: 16px;
     margin-bottom: 60px;
+    background-color: #F9F9F9;
 }
 
 .main-menu {
@@ -25,4 +26,12 @@ a:hover,
 a:focus,
 a:active {
     color: #7744D9 !important;
+}
+
+.card-title {
+    font-size: 1.25rem;
+}
+
+.placeholder-glow {
+    margin-bottom: 5px;
 }

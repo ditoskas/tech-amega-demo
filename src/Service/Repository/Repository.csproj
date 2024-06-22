@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.3.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Domain\Contracts\Contracts.csproj" />
+    <ProjectReference Include="..\..\Domain\Entities\Entities.csproj" />
   </ItemGroup>
 
 </Project>

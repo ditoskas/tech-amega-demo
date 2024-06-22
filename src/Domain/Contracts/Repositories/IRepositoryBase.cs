@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Contracts
+namespace Contracts.Repositories
 {
     /// <summary>
     /// Base interface for all repositories

@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Amega Demo - List of Instruments";
+}
+
+<div class="card card-flush h-xl-100">
+    <!--begin::Header-->
+    <div class="card-header pt-7 d-md-inline-flex justify-content-between align-items-md-center">
+        <!--begin::Title-->
+        <h4 class="card-title">
+            <span class="card-label fw-bold text-gray-800">List of Instruments</span>
+        </h4>
+        <input id="txtSeachPair" type="text" class="form-control" placeholder="Enter pair to search" style="width: 250px;" />
+        <!--end::Title-->
+
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body p-3 row row-cols-1 row-cols-md-4">
+        <!--begin::Body loader -->
+        <p class="placeholder-glow w-100" id="bodyLoader">
+            <span class="placeholder col-12"></span>
+        </p>
+        <!--end::Body loader -->
+        <!--begin::Body loader -->
+        <p class="text-danger text-center w-100 d-none" id="errorMessage">
+            Apologize, an error has occured, please reload the page.
+        </p>
+        <!--end::Body loader -->
+
+    </div>
+    <!--begin::Body-->
+</div>
+
+<!--begin::Instrument Template-->
+<div class="col d-none" id="instrumentTemplate">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-inline-flex align-items-center w-100">
+                <img src="" class="instrument-img" alt="...">
+                <div class="instrument-title fw-bold flex-grow-1"></div>
+                <p class="placeholder-glow d-none instrument-rate-loader" style="width: 120px;">
+                    <span class="placeholder col-12"></span>
+                </p>
+                <div class="instrument-rate text-muted fw-semibold d-none">Last Price: <span class="instrument-rate-value"></span></div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button type="button" class="btn btn-outline-primary">Get Latest Rate</button>
+        </div>
+    </div>
+</div>
+<!--end::Instrument Template-->
+
+<script type="text/javascript" src="/js/instruments.js"></script>
