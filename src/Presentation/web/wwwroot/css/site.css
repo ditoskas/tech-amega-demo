@@ -1,0 +1,28 @@
+html {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding: 0;
+    font-family: 'Mulish', sans-serif;
+    font-size: 16px;
+    margin-bottom: 60px;
+}
+
+.main-menu {
+    font-size: 16px;
+}
+
+a {
+    color: #232323;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+    color: #7744D9 !important;
+}
