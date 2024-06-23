@@ -12,7 +12,7 @@ namespace Api.Controllers
         {
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetPairs")]
         public async Task<IActionResult> GetPairs()
         {
             var instruments = await _dbServiceManager.InstrumentPairService.GetAllInstrumentPairsAsync();

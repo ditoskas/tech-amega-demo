@@ -1,7 +1,7 @@
 using Api;
+using Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -9,6 +9,8 @@ LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentD
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
+builder.Services.ConfigureQuotesProvider();
+builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (connectionString == null)
@@ -31,6 +33,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseExceptionHandler(opt => { });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

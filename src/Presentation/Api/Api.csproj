@@ -21,6 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Service\DatabaseService\DatabaseService.csproj" />
+    <ProjectReference Include="..\..\Service\LoggerService\LoggerService.csproj" />
+    <ProjectReference Include="..\..\Service\QuotesManager\QuotesManager.csproj" />
+    <ProjectReference Include="..\..\Service\Repository\Repository.csproj" />
     <ProjectReference Include="..\..\Service\Shared\Shared.csproj" />
   </ItemGroup>
 

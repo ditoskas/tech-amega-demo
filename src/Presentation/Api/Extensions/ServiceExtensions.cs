@@ -4,10 +4,10 @@ using Contracts.Repositories;
 using DatabaseService;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using QuotesManager;
 using Repository;
 
-namespace Shared.Extensions
+namespace Api.Extensions
 {
     public static class ServiceExtensions
     {
@@ -24,5 +24,7 @@ namespace Shared.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services) => services.AddScoped<IRepositoryManager, RepositoryManager>();
 
         public static void ConfigureServiceManager(this IServiceCollection services) => services.AddScoped<IDatabaseServiceManager, DatabaseServiceManager>();
+
+        public static void ConfigureQuotesProvider(this IServiceCollection services) => services.AddSingleton<IQuotesProvider, QuotesProvider>();
     }
 }
