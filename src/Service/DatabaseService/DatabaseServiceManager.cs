@@ -8,7 +8,7 @@ namespace DatabaseService
     /// <summary>
     /// Main class which handles all the services for database operations
     /// </summary>
-    public class DatabaseServiceManager : IDatabaseServiceManager
+    public sealed class DatabaseServiceManager : IDatabaseServiceManager
     {
         private readonly Lazy<IInstrumentPairService> _instrumentPairService;
 

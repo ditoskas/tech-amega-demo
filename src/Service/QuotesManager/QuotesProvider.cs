@@ -9,7 +9,7 @@ namespace QuotesManager
     /// <summary>
     /// Wrapper class for quotes, it execute the request to the provider and return standard response
     /// </summary>
-    public class QuotesProvider : IQuotesProvider
+    public sealed class QuotesProvider : IQuotesProvider
     {
         public async Task<LastPriceDto> GetLastPriceAsync(string pair)
         {

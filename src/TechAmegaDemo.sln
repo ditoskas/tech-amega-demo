@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuotesManager", "Service\Qu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuotesReceiver", "Presentation\QuotesReceiver\QuotesReceiver.csproj", "{179EA05A-23CD-4335-8721-091839283D29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Push.Entities", "Domain\Push.Entities\Push.Entities.csproj", "{6B636D6C-EBA0-4663-A707-452A81E8CB67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{179EA05A-23CD-4335-8721-091839283D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{179EA05A-23CD-4335-8721-091839283D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{179EA05A-23CD-4335-8721-091839283D29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B636D6C-EBA0-4663-A707-452A81E8CB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B636D6C-EBA0-4663-A707-452A81E8CB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B636D6C-EBA0-4663-A707-452A81E8CB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B636D6C-EBA0-4663-A707-452A81E8CB67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +103,7 @@ Global
 		{1371AA6A-BE73-4006-93B7-F06C310EAC9C} = {30CDE41F-7D31-4B52-A742-C9A0731AE479}
 		{A1D8DAB3-683F-4EAA-B0E9-9DED1289DB35} = {30CDE41F-7D31-4B52-A742-C9A0731AE479}
 		{179EA05A-23CD-4335-8721-091839283D29} = {4104FB99-A6C9-48BA-B449-916C36A8EE4E}
+		{6B636D6C-EBA0-4663-A707-452A81E8CB67} = {6C382E07-16D4-49C8-9261-AAE556F595EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {16D874B0-0A85-4C0A-B95A-3DA5AE432FA5}
