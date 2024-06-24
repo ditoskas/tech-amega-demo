@@ -4,7 +4,7 @@ const errorMessage = document.querySelector('#errorMessage');
 const instrumentsContainer = document.querySelector('#instrumentsContainer');
 async function fetchInstruments()
 {
-    const response = await fetch('https://localhost:44374/api/instruments');
+    const response = await fetch(window.API_URL + '/api/instruments');
     if (response.ok) {
         const instrumentsResponse = await response.json();
         if (instrumentsResponse.isSuccess)
@@ -21,7 +21,7 @@ async function fetchInstruments()
                 // Assing on click event to the get rate button
                 instrumentElement.querySelector('.btn-get-rate').addEventListener('click', async function (e) {
                     e.preventDefault();
-                    const getRateResponse = await fetch('https://localhost:44374/api/quotes/' + instrument.pair);
+                    const getRateResponse = await fetch(window.API_URL + '/api/quotes/' + instrument.pair);
                     if (getRateResponse.ok) {
                         const rateResponse = await getRateResponse.json();
                         if (rateResponse.isSuccess) {

@@ -13,9 +13,9 @@ namespace PushService.SignalRHandlers
 
         public async Task SendQuote(string groupName, string message)
         {
-            //await _hubContext.Clients.All.SendAsync("receiveQuote", message);
+            await _hubContext.Clients.All.SendAsync("receiveQuote", message);
             //@todo[Dimitris] find out why the below is not working
-            await _hubContext.Clients.Group(groupName).SendAsync("receiveQuote", message);
+            //await _hubContext.Clients.Group(groupName).SendAsync("receiveQuote", message);
         }
 
 

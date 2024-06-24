@@ -35,7 +35,7 @@ CREATE TABLE `__efmigrationshistory` (
 
 LOCK TABLES `__efmigrationshistory` WRITE;
 /*!40000 ALTER TABLE `__efmigrationshistory` DISABLE KEYS */;
-INSERT INTO `__efmigrationshistory` VALUES ('20240622104525_DatabaseCreation','8.0.6'),('20240622122824_AddInitialData','8.0.6');
+INSERT INTO `__efmigrationshistory` VALUES ('20240622104525_DatabaseCreation','8.0.6'),('20240622122824_AddInitialData','8.0.6'),('20240623155319_CreateQuotesTable','8.0.6');
 /*!40000 ALTER TABLE `__efmigrationshistory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `instrumentpairs` (
 
 LOCK TABLES `instrumentpairs` WRITE;
 /*!40000 ALTER TABLE `instrumentpairs` DISABLE KEYS */;
-INSERT INTO `instrumentpairs` VALUES (1,3,1,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(2,3,2,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(3,4,1,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(4,4,2,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(5,5,1,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(6,5,2,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(7,6,1,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(8,6,2,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(9,7,1,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(10,7,2,'2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000');
+INSERT INTO `instrumentpairs` VALUES (1,3,1,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(2,3,2,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(3,4,1,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(4,4,2,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(5,5,1,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(6,5,2,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(7,6,1,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(8,6,2,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(9,7,1,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(10,7,2,'2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000');
 /*!40000 ALTER TABLE `instrumentpairs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,8 +94,37 @@ CREATE TABLE `instruments` (
 
 LOCK TABLES `instruments` WRITE;
 /*!40000 ALTER TABLE `instruments` DISABLE KEYS */;
-INSERT INTO `instruments` VALUES (1,'EUR','Euro','/img/instruments/eur.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(2,'USD','United States Dollar','/img/instruments/usd.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(3,'BTC','Bitcoin','/img/instruments/btc.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(4,'ETH','Ethereum','/img/instruments/eth.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(5,'XRP','Ripple','/img/instruments/xrp.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(6,'BCH','Bitcoin Cash','/img/instruments/bch.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000'),(7,'LTC','Light Coin','/img/instruments/ltc.png','2024-06-22 15:28:24.000000','2024-06-22 15:28:24.000000');
+INSERT INTO `instruments` VALUES (1,'EUR','Euro','/img/instruments/eur.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(2,'USD','United States Dollar','/img/instruments/usd.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(3,'BTC','Bitcoin','/img/instruments/btc.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(4,'ETH','Ethereum','/img/instruments/eth.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(5,'XRP','Ripple','/img/instruments/xrp.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(6,'BCH','Bitcoin Cash','/img/instruments/bch.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000'),(7,'LTC','Light Coin','/img/instruments/ltc.png','2024-06-23 18:53:19.000000','2024-06-23 18:53:19.000000');
 /*!40000 ALTER TABLE `instruments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `quotes`
+--
+
+DROP TABLE IF EXISTS `quotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `quotes` (
+  `Id` bigint NOT NULL AUTO_INCREMENT,
+  `Symbol` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Ts` datetime(6) NOT NULL,
+  `Bid` decimal(65,30) NOT NULL,
+  `Ask` decimal(65,30) NOT NULL,
+  `Mid` decimal(65,30) NOT NULL,
+  `CreatedAt` datetime(6) NOT NULL,
+  `UpdatedAt` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `quotes`
+--
+
+LOCK TABLES `quotes` WRITE;
+/*!40000 ALTER TABLE `quotes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `quotes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -107,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-22 21:02:07
+-- Dump completed on 2024-06-24 18:56:49

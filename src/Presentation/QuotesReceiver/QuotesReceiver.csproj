@@ -18,7 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Service\DatabaseService\DatabaseService.csproj" />
     <ProjectReference Include="..\..\Service\LoggerService\LoggerService.csproj" />
     <ProjectReference Include="..\..\Service\QueueService\QueueService.csproj" />
+    <ProjectReference Include="..\..\Service\Repository\Repository.csproj" />
   </ItemGroup>
 </Project>
