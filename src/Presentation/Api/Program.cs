@@ -2,6 +2,7 @@ using Api;
 using Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using LoggerService;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
@@ -10,6 +11,7 @@ builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureQuotesProvider();
+builder.Services.ConfigureCors(new string[] { "https://localhost:32768" });
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -42,6 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 

@@ -11,6 +11,9 @@ namespace QuotesManager
     /// </summary>
     public sealed class QuotesProvider : IQuotesProvider
     {
+        public QuotesProvider()
+        {
+        }
         public async Task<LastPriceDto> GetLastPriceAsync(string pair)
         {
             LastPriceResponse? response = await CexRequestor.GetLastPrice(pair.ToUpper());

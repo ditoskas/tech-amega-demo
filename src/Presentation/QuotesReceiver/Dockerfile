@@ -8,6 +8,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Presentation/QuotesReceiver/QuotesReceiver.csproj", "Presentation/QuotesReceiver/"]
+COPY ["Service/LoggerService/LoggerService.csproj", "Service/LoggerService/"]
+COPY ["Domain/Contracts/Contracts.csproj", "Domain/Contracts/"]
+COPY ["Domain/Entities/Entities.csproj", "Domain/Entities/"]
+COPY ["Service/QueueService/QueueService.csproj", "Service/QueueService/"]
+COPY ["Domain/Push.Entities/Push.Entities.csproj", "Domain/Push.Entities/"]
+COPY ["Service/Shared/Shared.csproj", "Service/Shared/"]
 RUN dotnet restore "./Presentation/QuotesReceiver/QuotesReceiver.csproj"
 COPY . .
 WORKDIR "/src/Presentation/QuotesReceiver"

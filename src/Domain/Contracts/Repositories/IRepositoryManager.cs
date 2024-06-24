@@ -5,6 +5,7 @@ namespace Contracts.Repositories
     {
         IIntrumentPairRepository InstrumentPair { get; }
         IIntrumentRepository Instrument { get; }
+        IQuoteRepository Quote { get; }
         Task SaveAsync();
     }
 }

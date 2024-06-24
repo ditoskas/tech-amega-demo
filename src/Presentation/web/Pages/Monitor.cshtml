@@ -1,0 +1,73 @@
+﻿@page
+@model web.Pages.MonitorModel
+@{
+    ViewData["Title"] = "Amega Demo - List of Instruments";
+}
+
+<div class="card card-flush h-xl-100">
+    <!--begin::Header-->
+    <div class="card-header pt-7 d-md-inline-flex justify-content-between align-items-md-center">
+        <!--begin::Title-->
+        <h4 class="card-title">
+            <span class="card-label fw-bold text-gray-800">Subscribe To Rates</span>
+        </h4>
+        <!--end::Title-->
+    </div>
+    <!--end::Header-->
+
+    <!--begin::Body-->
+    <div class="card-body p-3 row">
+       @* <partial name="/Pages/Shared/_BodyLoader.cshtml" />
+       <partial name="/Pages/Shared/_ErrorBody.cshtml" /> *@
+       <div class="row">
+           <div class="col-12">
+               <p>
+                   Click a button to subscribe on live rates for a specific pair.
+               </p>
+               <div id="dSubscribeButtons" class="subscribe-buttons-container">
+
+               </div>
+           </div>
+       </div>
+    </div>
+    <!--begin::Body-->
+</div>
+<br/><br/>
+<div class="card card-flush h-xl-100">
+    <!--begin::Header-->
+    <div class="card-header pt-7 d-md-inline-flex justify-content-between align-items-md-center">
+        <!--begin::Title-->
+        <h4 class="card-title">
+            <span class="card-label fw-bold text-gray-800">Subscribed Pairs</span>
+        </h4>
+        <!--end::Title-->
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body p-3 row">
+        @* <partial name="/Pages/Shared/_BodyLoader.cshtml" />
+        <partial name="/Pages/Shared/_ErrorBody.cshtml" /> *@
+        <div class="row">
+            <div class="col-12">
+                <div id="dSubscribedPairsContainer" class="subscribe-pairs-container">
+                    <div class="col-xl-3 col-sm-6 col-md-6">
+                        <div class="monitor-widget">
+                            <div class="monitor-widget-body">
+                                <img class="monitor-widget-body-img" src="~/img/instruments/bch.png" />
+                                <div class="monitor-widget-body-info">
+                                    <span class="monitor-widget-body-info-rate">1 BTC = $4,500</span>
+                                    <h2 class="monitor-widget-body-info-desc">Bitcoin</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--begin::Body-->
+</div>
+
+<script type="text/javascript" src="/js/signalr.min.js"></script>
+<script type="text/javascript" src="/js/monitor.js"></script>
+<script type="text/javascript" src="/js/quotes.js"></script>

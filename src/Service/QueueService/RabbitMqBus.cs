@@ -1,11 +1,14 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
+﻿using Contracts;
+using MediatR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Push.Entities.Bus;
 using Push.Entities.Commands;
 using Push.Entities.Events;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Shared.Utilities;
+using System.Configuration;
 using System.Text;
 
 namespace QueueService
@@ -15,19 +18,21 @@ namespace QueueService
         private readonly IMediator _mediator;
         private readonly Dictionary<string, List<Type>> _handlers;
         private readonly List<Type> _eventTypes;
-        private readonly ILogger _logger;
+        private readonly ILoggerManager _logger;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public RabbitMqBus(IMediator mediator, ILogger logger)
+        public RabbitMqBus(IMediator mediator, ILoggerManager logger, IServiceScopeFactory serviceScopeFactory)
         {
             _mediator = mediator;
+            _logger = logger;
+            _serviceScopeFactory = serviceScopeFactory;
             _handlers = new Dictionary<string, List<Type>>();
             _eventTypes = new List<Type>();
-            _logger = logger;
         }
 
         public void Publish<T>(T @event) where T : BaseEvent
         {
-            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
+            ConnectionFactory factory = CreateConnectionFactory();
             using (IConnection connection = factory.CreateConnection())
             using (IModel channel = connection.CreateModel())
             {
@@ -38,7 +43,7 @@ namespace QueueService
                 byte[] body = Encoding.UTF8.GetBytes(message);
 
                 channel.BasicPublish("", eventName, null, body);
-                _logger.LogInformation($"Event published: [{eventName}] [{message}]");
+                _logger.LogInfo ($"Event published: [{eventName}] [{message}]");
             }
         }
 
@@ -71,14 +76,14 @@ namespace QueueService
 
             _handlers[eventName].Add(handlerType);
 
-            _logger.LogInformation($"Subscribed To: [{eventName}] with handler [{handlerType.Name}]");
+            _logger.LogInfo($"Subscribed To: [{eventName}] with handler [{handlerType.Name}]");
 
             StartBasicConsume<T>();
         }
 
         private void StartBasicConsume<T>() where T : BaseEvent
         {
-            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost", DispatchConsumersAsync = true };
+            ConnectionFactory factory = CreateConnectionFactory();
             IConnection connection = factory.CreateConnection();
             IModel channel = connection.CreateModel();
             string eventName = typeof(T).Name;
@@ -89,6 +94,29 @@ namespace QueueService
             consumer.Received += Consumer_Received;
 
             channel.BasicConsume(eventName, true, consumer);
+        }
+
+        private ConnectionFactory CreateConnectionFactory()
+        {
+            string host = ConfigurationManager.AppSettings["RabbitMqServer"] ?? "localhost";
+            int port;
+            if (!int.TryParse(ConfigurationManager.AppSettings["RabbitMqPort"], out port))
+            {
+                port = 5672;
+            }
+            string username = ConfigurationManager.AppSettings["RabbitMqUser"] ?? "dimitris";
+            string password = ConfigurationManager.AppSettings["RabbitMqPassword"] ?? "2521020995";
+            string directory = ConfigurationManager.AppSettings["RabbitMqDirectory"] ?? "/";
+
+            return new ConnectionFactory()
+            {
+                HostName = host,
+                Port = port,
+                UserName = username,
+                Password = password,
+                VirtualHost = directory,
+                DispatchConsumersAsync = true
+            };
         }
 
         private async Task Consumer_Received(object sender, BasicDeliverEventArgs @event)
@@ -102,7 +130,7 @@ namespace QueueService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                _logger.LogError(ex.Message);
                 //Console.WriteLine(ex.Message);
             }
         }
@@ -111,23 +139,26 @@ namespace QueueService
         {
             if (_handlers.ContainsKey(eventName))
             {
-                List<Type> subscriptions = _handlers[eventName];
-                foreach (Type subscription in subscriptions)
+                using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                 {
-                    if (Activator.CreateInstance(subscription) is not IEventHandler handler) continue;
+                    List<Type> subscriptions = _handlers[eventName];
+                    foreach (Type subscription in subscriptions)
+                    {
+                        if (scope.ServiceProvider.GetService(subscription) is not IEventHandler handler) continue;
 
-                    Type? eventType = _eventTypes.SingleOrDefault(t => t.Name == eventName);
-                    if (eventType == null)
-                    {
-                        throw new Exception($"Event Type {eventName} not found");
+                        Type? eventType = _eventTypes.SingleOrDefault(t => t.Name == eventName);
+                        if (eventType == null)
+                        {
+                            throw new Exception($"Event Type {eventName} not found");
+                        }
+                        object? @event = Serializer.Deserialize(message, eventType);
+                        if (@event == null)
+                        {
+                            throw new Exception($"Fail to deserialize event, [{message}]");
+                        }
+                        Type concreteType = typeof(IEventHandler<>).MakeGenericType(eventType);
+                        await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { @event });
                     }
-                    object? @event = Serializer.Deserialize(message, eventType);
-                    if (@event == null)
-                    {
-                        throw new Exception($"Fail to deserialize event, [{message}]");
-                    }
-                    Type concreteType = typeof(IEventHandler<>).MakeGenericType(eventType);
-                    await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { @event });
                 }
             }
         }

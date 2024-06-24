@@ -6,6 +6,5 @@ namespace Contracts
     {
         Task<LastPriceDto> GetLastPriceAsync(string pair);
         Task<TickerDto> GetTickerAsync(string pair);
-
     }
 }

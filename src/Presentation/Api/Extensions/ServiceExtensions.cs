@@ -2,7 +2,6 @@
 using Contracts.DatabaseServices;
 using Contracts.Repositories;
 using DatabaseService;
-using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using QuotesManager;
 using Repository;
@@ -11,8 +10,16 @@ namespace Api.Extensions
 {
     public static class ServiceExtensions
     {
-        public static void ConfigureLoggerService(this IServiceCollection services) => services.AddSingleton<ILoggerManager, LoggerManager>();
-
+        public static void ConfigureCors(this IServiceCollection services, string[] hostsToAllow)
+        {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyMethod()
+                                                                  .AllowAnyHeader()
+                                                                  .AllowCredentials()
+                                                                  .WithOrigins(hostsToAllow));
+            });
+        }
         public static void ConfigureMysqlContext(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<RepositoryContext>(options =>

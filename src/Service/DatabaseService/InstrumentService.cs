@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatabaseService
 {
-    internal class InstrumentService
+    public class InstrumentService
     {
     }
 }

@@ -35,3 +35,42 @@ a:active {
 .placeholder-glow {
     margin-bottom: 5px;
 }
+
+.monitor-widget {
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 6px 1px rgba(69,65,78, 0.1);
+    -moz-box-shadow: 0 1px 6px 1px rgba(69,65,78,0.1);
+    box-shadow: 0 1px 6px 1px rgba(69,65,78,0.1);
+    margin-bottom: 2rem;
+    border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.monitor-widget-body {
+    display: flex;
+    position: relative;
+    padding: 1rem;
+    font-size: 14px;
+    padding-bottom: 0;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-transition: 0s;
+    transition: 0s;
+}
+
+.monitor-widget-body-img {
+    margin-right: 1rem;
+}
+
+.monitor-widget-body-info{
+    flex: 1 1;
+}
+
+.monitor-widget-body-info-rate {
+    color: #878793;
+}
+
+.monitor-widget-body-info-desc {
+    font-size: 18px;
+    color: #3a3952;
+}
