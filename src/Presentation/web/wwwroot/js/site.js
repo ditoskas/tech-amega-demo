@@ -2,5 +2,5 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-window.API_URL = "https://localhost:44374";
-window.SOCKETS_URL = "https://localhost:44328";
+window.API_URL = "http://localhost:8080";
+window.SOCKETS_URL = "http://localhost:8086";

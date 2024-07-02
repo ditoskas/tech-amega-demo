@@ -8,7 +8,7 @@ volumes:
 
 services:
   #DataBase Service
-  database:
+  db:
     #Pull the latest mysql image
     image: mysql:8.0.22
     #Map port 3306 on the mysql container to port 3306 in the host
@@ -16,8 +16,8 @@ services:
       - "3306:3306"
     #Specify where the persisted Data should be stored
     volumes:
-      - datafiles:/var/lib/mysql
-      - "~/sql-scripts/setup.sql:/docker-entrypoint-initdb.d/1.sql"
+      - ./datafiles:/var/lib/mysql
+      - ./sql-scripts/setup.sql:/docker-entrypoint-initdb.d/setup.sql
     restart: always
     #Specify Environment Variables for mysql
     environment: 
@@ -25,6 +25,20 @@ services:
       MYSQL_USER: amega
       MYSQL_PASSWORD: Am3ga!
       MYSQL_DATABASE: amega
+  rabbitmq:
+      image: rabbitmq:3-management-alpine
+      container_name: 'rabbitmq'
+      ports:
+        - 5672:5672
+        - 15672:15672
+      volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+      environment: 
+        RABBITMQ_DEFAULT_USER: amega
+        RABBITMQ_DEFAULT_PASS: Am3ga!
+    # networks:
+    #     - custom_net
   #Api  Service
   api:
     build:
@@ -33,14 +47,18 @@ services:
       dockerfile: "/Presentation/Api/Dockerfile"
     #This Service Depends on the database service specifed above
     depends_on: 
-      - database
+      - db
     #Map port 8080 in the docker container to port 80 in the Api
     ports:
-      - "8080:80"
+      - "8080:8080"
+      - "8081:8081"
     restart: always
     #Specify Environment Variables for the Api Service
     environment: 
-      - DBHOST=database
+      - DBHOST=db
+      - DBNAME=amega
+      - DBUSER=amega
+      - DBPASS=Am3ga!
       - ASPNETCORE_ENVIRONMENT=Development
   #web  Service
   web:
@@ -53,7 +71,8 @@ services:
       - api
     #Map port 8083 in the docker container to port 80 in the web
     ports:
-      - "8083:80"
+      - "8083:8080"
+      - "8084:8084"
     restart: always
     #Specify Environment Variables for the web Service
     environment: 
@@ -67,14 +86,15 @@ services:
     #This Service Depends on the database service specifed above
     depends_on: 
       - api
+      - rabbitmq
     #Map port 8083 in the docker container to port 80 in the push
     ports:
-      - "8085:80"
+      - "8086:8080"
     restart: always
     #Specify Environment Variables for the web Service
     environment: 
       - ASPNETCORE_ENVIRONMENT=Development
-  #Quotes Receiver Service
+#   #Quotes Receiver Service
   quotes:
     build:
       context: .
@@ -83,24 +103,17 @@ services:
     #This Service Depends on the database service specifed above
     depends_on: 
       - rabbitmq
+      - db
     #Map port 8083 in the docker container to port 80 in the push
     ports:
-      - "8085:80"
+      - "8085:8080"
     restart: always
     #Specify Environment Variables for the web Service
     environment: 
       - ASPNETCORE_ENVIRONMENT=Development
-  rabbitmq:
-      image: rabbitmq:3-management-alpine
-      container_name: 'rabbitmq'
-      ports:
-          - 5672:5672
-          - 15672:15672
-      volumes:
-          - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-          - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-      networks:
-          - rabbitmq_go_net
-networks:
-  rabbitmq_go_net:
-    driver: bridge
+
+#       networks:
+#           - custom_net
+# networks:
+#   custom_net:
+#     driver: bridge

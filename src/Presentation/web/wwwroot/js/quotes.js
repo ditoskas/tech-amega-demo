@@ -1,4 +1,4 @@
-﻿const connectionToQuotesHub = new signalR.HubConnectionBuilder().withUrl(window.SOCKETS_URL + "/hubs/quotes").build();
+﻿const connectionToQuotesHub = new signalR.HubConnectionBuilder().withUrl("http://localhost/hubs/quotes").build();
 
 // functions to send on server
 function subscribeQuotes(symbol) {

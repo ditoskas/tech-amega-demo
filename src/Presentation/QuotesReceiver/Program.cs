@@ -21,7 +21,8 @@ try
     builder.Services.ConfigureRepositoryManager();
     builder.Services.ConfigureQueueServices();
     builder.Services.ConfigureDatabaseServiceManager();
-    string? connectionString = ConfigurationManager.AppSettings["DefaultConnection"];
+    //string? connectionString = ConfigurationManager.AppSettings["DefaultConnection"];
+    string? connectionString = "server=db;database=amega;user=amega;password=Am3ga!;";
     if (connectionString == null)
     {
         throw new Exception("Connection string not found in appsettings.json");

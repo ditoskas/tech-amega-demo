@@ -98,15 +98,15 @@ namespace QueueService
 
         private ConnectionFactory CreateConnectionFactory()
         {
-            string host = ConfigurationManager.AppSettings["RabbitMqServer"] ?? "localhost";
-            int port;
-            if (!int.TryParse(ConfigurationManager.AppSettings["RabbitMqPort"], out port))
-            {
-                port = 5672;
-            }
-            string username = ConfigurationManager.AppSettings["RabbitMqUser"] ?? "dimitris";
-            string password = ConfigurationManager.AppSettings["RabbitMqPassword"] ?? "2521020995";
-            string directory = ConfigurationManager.AppSettings["RabbitMqDirectory"] ?? "/";
+            string host = "rabbitmq";// ConfigurationManager.AppSettings["RabbitMqServer"] ?? "localhost";
+            int port = 5672;
+            //if (!int.TryParse(ConfigurationManager.AppSettings["RabbitMqPort"], out port))
+            //{
+            //    port = 5672;
+            //}
+            string username = "amega";// ConfigurationManager.AppSettings["RabbitMqUser"] ?? "dimitris";
+            string password = "Am3ga!"; // ConfigurationManager.AppSettings["RabbitMqPassword"] ?? "2521020995";
+            string directory = "/";// ConfigurationManager.AppSettings["RabbitMqDirectory"] ?? "/";
 
             return new ConnectionFactory()
             {

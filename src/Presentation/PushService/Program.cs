@@ -13,7 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureDatabaseServiceManager();
-builder.Services.ConfigureCors(new string[] { "https://localhost:32768" });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyMethod()
+                                                      .AllowAnyHeader()
+                                                      .AllowCredentials()
+                                                      .WithOrigins(["http://localhost:8083", "http://localhost:8080", "http://localhost:8085"]));
+});
 builder.Services.ConfigureQueueServices();
 builder.Services.AddTransient<QuoteReceivedEventHandler>();
 builder.Services.AddTransient<IEventHandler<QuoteReceivedEvent>, QuoteReceivedEventHandler>();
@@ -34,8 +40,6 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-//IDatabaseServiceManager dbServiceManager = app.Services.GetRequiredService<IDatabaseServiceManager>();
-//IEnumerable<InstrumentPairDto> pairs = dbServiceManager.InstrumentPairService.GetAllInstrumentPairsAsync().Result;
 
 IEventBus eventBus = app.Services.GetRequiredService<IEventBus>();
 eventBus.Subscribe<QuoteReceivedEvent, QuoteReceivedEventHandler>();
