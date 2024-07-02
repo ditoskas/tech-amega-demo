@@ -18,6 +18,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy", builder => builder.AllowAnyMethod()
                                                       .AllowAnyHeader()
                                                       .AllowCredentials()
+                                                      .SetIsOriginAllowed((host) => true)
                                                       .WithOrigins(["http://localhost:8083", "http://localhost:8080", "http://localhost:8085"]));
 });
 builder.Services.ConfigureQueueServices();
